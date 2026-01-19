@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/public/style.css" />
+  <title>Case reviewer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="header">
+    <h1>Case Reviewer</h1>
+  </div>
+
+  <div class="content">
+    <div class="card">
+      <p>Select a CSV file below and run scaling</p>
+    </div>
+  </div>
+
+  <form class="input-bar" id="uploadForm">
+    <div class="file-input">
+      <input type="file" id="csvFile" accept=".csv" required />
+    </div>
+    <button type="submit" class="send-btn">Send</button>
+  </form>
+
+  <div class="spinner-overlay" id="spinner">
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+const form = document.getElementById('uploadForm');
+const spinner = document.getElementById('spinner');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  spinner.style.display = 'flex';
+
+  const file = document.getElementById('csvFile').files[0];
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const res = await fetch('/upload', {
+    method: 'POST',
+    body: formData
+  });
+
+  const data = await res.json();
+  spinner.style.display = 'none';
+
+  const blob = new Blob(
+    [JSON.stringify(data, null, 2)],
+    { type: 'application/json' }
+  );
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'scored_cases.json';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+</script>
+
+</body>
+</html>

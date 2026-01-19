@@ -1,0 +1,10 @@
+"Create a simple, modern interface using HTML and CSS to upload a CSV file and export a JSON file"
+
+Requirements:
+- Input field at the bottom with a send button
+- Input field contains a box to import a file
+- Press Enter to send the input file
+- Show loading spinner while waiting for response
+- Orange background
+- Clean, minimal design
+- Mobile responsive
