@@ -20,11 +20,6 @@ app = FastAPI()
 if os.path.isdir("public"):
     app.mount("/public", StaticFiles(directory="public"), name="public")
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    with open("public/index.html") as f:
-        return HTMLResponse(f.read())
-
 
 @app.get("/health")
 async def health_check():
