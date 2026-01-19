@@ -1,6 +1,7 @@
 fastapi~=0.128.0
 uvicorn
 pydantic
+pandas
 huggingface-hub
 langchain
 langchain-openai~=1.1.7
