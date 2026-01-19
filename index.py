@@ -17,8 +17,8 @@ llm = ChatOpenAI(
 )
 
 app = FastAPI()
-
-app.mount("/public", StaticFiles(directory="public"), name="public")
+if os.path.isdir("public"):
+    app.mount("/public", StaticFiles(directory="public"), name="public")
 
 @app.get("/", response_class=HTMLResponse)
 async def root():
