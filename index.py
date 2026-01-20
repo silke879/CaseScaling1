@@ -1,36 +1,14 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
-from pathlib import Path
 import pandas as pd
 from io import StringIO
 import os, json, time
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
-
 
 load_dotenv()
 
-llm = ChatOpenAI(
-    model="gpt-4o-mini",
-    api_key=os.getenv("OPENAI_API_KEY")
-)
-
 app = FastAPI()
-
-@app.get("/")
-async def root():
-    return FileResponse("public/index.html")
-    
-
-@app.get("/debug")
-async def debug():
-    return {
-        "base_dir": str(BASE_DIR),
-        "index_exists": INDEX_FILE.exists(),
-        "index_path": str(INDEX_FILE)
-    }
 
 @app.get("/health")
 async def health_check():
