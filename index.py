@@ -21,9 +21,12 @@ if os.path.isdir("public"):
     app.mount("/public", StaticFiles(directory="public"), name="public")
 
 @app.get("/", response_class=HTMLResponse)
-async def root():
-    with open("public/index.html") as f:
-        return HTMLResponse(f.read())
+async def read_root():
+    try:
+        with open("public/index.html", "r") as f:
+            return HTMLResponse(content=f.read())
+    except:
+        return HTMLResponse("<h1>Chat API - Use /docs</h1>")
 
 @app.get("/health")
 async def health_check():
