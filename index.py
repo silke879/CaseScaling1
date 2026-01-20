@@ -179,4 +179,7 @@ async def upload_csv(file: UploadFile = File(...)):
     })
 
 
+if __name__ == "main":
+    uvicorn.run(app, port=8000, host="0.0.0.0")
+
 
