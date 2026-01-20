@@ -19,17 +19,10 @@ llm = ChatOpenAI(
 
 app = FastAPI()
 
-BASE_DIR = Path(__file__).resolve().parent
-INDEX_FILE = BASE_DIR / "public" / "index.html"
-
-@app.get("/", response_class=HTMLResponse)
-async def read_root():
-    if INDEX_FILE.exists():
-        return HTMLResponse(INDEX_FILE.read_text(encoding="utf-8"))
-    return HTMLResponse(
-        "<h1>Chat API - Use /docs</h1>",
-        status_code=500
-    )
+@app.get("/")
+async def root():
+    return FileResponse("public/index.html")
+    
 
 @app.get("/debug")
 async def debug():
