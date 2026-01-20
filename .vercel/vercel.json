@@ -2,13 +2,14 @@
   "builds": [
     {
       "src": "index.py",
-      "use": "@vercel/python",
-      "config": {
-        "includeFiles": ["public/**"]
-      }
+      "use": "@vercel/python"
     }
   ],
   "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/public/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "index.py"
