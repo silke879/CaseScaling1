@@ -29,38 +29,10 @@
     <div class="spinner"></div>
   </div>
 
-  <script>
-const form = document.getElementById('uploadForm');
-const spinner = document.getElementById('spinner');
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  spinner.style.display = 'flex';
-
-  const file = document.getElementById('csvFile').files[0];
-  const formData = new FormData();
-  formData.append('file', file);
-
-  const res = await fetch('/upload', {
-    method: 'POST',
-    body: formData
-  });
-
-  const data = await res.json();
-  spinner.style.display = 'none';
-
-  const blob = new Blob(
-    [JSON.stringify(data, null, 2)],
-    { type: 'application/json' }
-  );
-
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'scored_cases.json';
-  a.click();
-  URL.revokeObjectURL(url);
-});
+<script>
+fetch("/health")
+  .then(res => res.json())
+  .then(data => console.log(data));
 </script>
 
 </body>
