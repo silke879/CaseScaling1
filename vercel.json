@@ -7,7 +7,7 @@
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
+      "src": "/(.*\\.(css|js|png|jpg|ico|html))",
       "dest": "/public/$1"
     },
     {
