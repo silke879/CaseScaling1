@@ -31,6 +31,14 @@ async def read_root():
         status_code=500
     )
 
+@app.get("/debug")
+async def debug():
+    return {
+        "base_dir": str(BASE_DIR),
+        "index_exists": INDEX_FILE.exists(),
+        "index_path": str(INDEX_FILE)
+    }
+
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
