@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
+from pathlib import Path
 import pandas as pd
 from io import StringIO
 import os, json, time
@@ -17,16 +18,18 @@ llm = ChatOpenAI(
 )
 
 app = FastAPI()
-if os.path.isdir("public"):
-    app.mount("/public", StaticFiles(directory="public"), name="public")
+
+BASE_DIR = Path(__file__).resolve().parent
+INDEX_FILE = BASE_DIR / "public" / "index.html"
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
-    try:
-        with open("public/index.html", "r") as f:
-            return HTMLResponse(content=f.read())
-    except:
-        return HTMLResponse("<h1>Chat API - Use /docs</h1>")
+    if INDEX_FILE.exists():
+        return HTMLResponse(INDEX_FILE.read_text(encoding="utf-8"))
+    return HTMLResponse(
+        "<h1>Chat API - Use /docs</h1>",
+        status_code=500
+    )
 
 @app.get("/health")
 async def health_check():
